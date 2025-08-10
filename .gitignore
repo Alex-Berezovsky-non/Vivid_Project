@@ -1,0 +1,79 @@
+# .gitignore
+
+### Python ###
+# Виртуальное окружение
+.venv/
+venv/
+env/
+
+# Файлы базы данных
+db.sqlite3
+
+# Кэш Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Файлы окружения
+.env
+.env.example
+.env.local
+.env.prod
+secrets.json
+
+### Django ###
+# Статические файлы
+/staticfiles/
+/collect_static/
+
+# Медиа файлы
+/media/
+
+# Миграции (опционально)
+/migrations/
+
+### Системные файлы ###
+.DS_Store  # Для macOS
+Thumbs.db  # Для Windows
+
+### Логи и временные файлы ###
+*.log
+*.tmp
+*.bak
+
+### IDE ###
+.vscode/
+.idea/
+
+### Бэкапы и архивы ###
+*.bak
+*.zip
+*.tar.gz
+
+### Тестовые данные ###
+/test_data/
+/fixtures/
+
+### Документация ###
+/docs/_build/
+
+### PyInstaller ###
+/build/
+/dist/
+*.spec
+
+### Jupyter ###
+.ipynb_checkpoints/
+
+### PyCharm ###
+.idea/
+*.iml
+
+### Visual Studio Code ###
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
