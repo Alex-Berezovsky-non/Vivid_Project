@@ -4,7 +4,7 @@
 {% block content %}
 <section class="contact-section">
     <div class="container">
-        <h1 class="contact-title">Свяжитесь со мной</h1>
+        <h1 class="contact-title">Как со мной связаться</h1>
         
         <div class="contact-grid">
             <!-- Левая колонка - форма -->
@@ -39,57 +39,29 @@
             <div class="contact-info">
                 <h2>Мои контакты</h2>
                 <div class="contact-details">
-                    <!-- Телефон -->
                     <div class="contact-item">
-                        <i class="fas fa-phone-alt contact-icon"></i>
+                        <i class="fas fa-phone contact-icon"></i>
                         <span>{{ site_settings.phone }}</span>
                     </div>
-                    
-                    <!-- Email -->
                     <div class="contact-item">
                         <i class="fas fa-envelope contact-icon"></i>
                         <span>{{ site_settings.email }}</span>
-                    </div>
-                    
-                    <!-- Социальные сети -->
-                    <div class="social-links">
-                        <!-- ВКонтакте -->
-                        {% if site_settings.vk %}
-                        <a href="{{ site_settings.vk }}" target="_blank" title="ВКонтакте">
-                            <i class="fab fa-vk social-icon"></i>
-                        </a>
-                        {% endif %}
-                        
-                        <!-- Instagram -->
-                        {% if site_settings.instagram %}
-                        <a href="{{ site_settings.instagram }}" target="_blank" title="Instagram">
-                            <i class="fab fa-instagram social-icon"></i>
-                        </a>
-                        {% endif %}
-                        
-                        <!-- Telegram -->
-                        {% if site_settings.telegram %}
-                        <a href="{{ site_settings.telegram }}" target="_blank" title="Telegram">
-                            <i class="fab fa-telegram-plane social-icon"></i>
-                        </a>
-                        {% endif %}
-                        
-                        <!-- WhatsApp -->
-                        {% if site_settings.whatsapp %}
-                        <a href="{{ site_settings.whatsapp }}" target="_blank" title="WhatsApp">
-                            <i class="fab fa-whatsapp social-icon"></i>
-                        </a>
-                        {% endif %}
                     </div>
                 </div>
                 
                 <!-- Карта -->
                 <div class="map-container">
-                    <iframe src="https://yandex.ru/map-widget/v1/?um=..." 
+                    {% if site_settings.map_embed_url %}
+                    <iframe src="{{ site_settings.map_embed_url }}" 
                             width="100%" 
                             height="300" 
                             frameborder="0" 
                             allowfullscreen></iframe>
+                    {% else %}
+                    <div class="map-placeholder">
+                        <p>Карта будет отображена здесь</p>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

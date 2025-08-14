@@ -1,36 +1,30 @@
-{% load static %}  
-<footer class="footer">
-    <div class="footer-contacts">
-        <p>{{ site_settings.phone }} | {{ site_settings.email }}</p>
-    </div>
-    
-    <div class="footer-social">
-        {% if site_settings.instagram %}
-        <a href="{{ site_settings.instagram }}" target="_blank" class="social-link">
-            <img src="{% static 'core/icons/instagram.svg' %}" alt="Instagram" width="24">
-        </a>
-        {% endif %}
+<footer class="footer bg-light py-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4 mb-md-0">
+                <h5>Услуги</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'core:services' %}#portrait">Портретная съемка</a></li>
+                    <li><a href="{% url 'core:services' %}#lovestory">Love Story</a></li>
+                    <li><a href="{% url 'core:services' %}#family">Семейные фотосессии</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-md-4 mb-4 mb-md-0">
+                <h5>Контакты</h5>
+                <p><i class="fas fa-phone me-2"></i> {{ site_settings.phone }}</p>
+                <p><i class="fas fa-envelope me-2"></i> {{ site_settings.email }}</p>
+            </div>
+            
+            <div class="col-md-4">
+                <h5>Часы работы</h5>
+                <p>Пн-Пт: 10:00-20:00</p>
+                <p>Сб-Вс: по договорённости</p>
+            </div>
+        </div>
         
-        {% if site_settings.telegram %}
-        <a href="{{ site_settings.telegram }}" target="_blank" class="social-link">
-            <img src="{% static 'core/icons/telegram.svg' %}" alt="Telegram" width="24">
-        </a>
-        {% endif %}
-        
-        {% if site_settings.whatsapp %}
-        <a href="{{ site_settings.whatsapp }}" target="_blank" class="social-link">
-            <img src="{% static 'core/icons/whatsapp.svg' %}" alt="WhatsApp" width="24">
-        </a>
-        {% endif %}
-        
-        {% if site_settings.vk %}
-        <a href="{{ site_settings.vk }}" target="_blank" class="social-link">
-            <img src="{% static 'core/icons/vk.svg' %}" alt="VKontakte" width="24">
-        </a>
-        {% endif %}
-    </div>
-    
-    <div class="footer-copyright">
-        &copy; {{ site_settings.title }} {% now "Y" %}
+        <div class="text-center mt-4 pt-3 border-top">
+            &copy; {{ site_settings.title }} {% now "Y" %}
+        </div>
     </div>
 </footer>

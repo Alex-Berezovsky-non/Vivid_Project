@@ -1,12 +1,20 @@
 {% extends "core/base.html" %}
 
 {% block content %}
-<table class="services">
-    {% for service in services %}
-    <tr>
-        <td>{{ service.name }}</td>
-        <td>{{ service.price }}₽</td>
-    </tr>
-    {% endfor %}
-</table>
+<section class="services">
+    <h1>Мои услуги</h1>
+    
+    <div class="service-cards">
+        {% for service in services %}
+        <div class="service-card">
+            <h2>{{ service.name }}</h2>
+            <p class="price">{{ service.price }}₽</p>
+            <p>{{ service.description|default:"Подробное описание услуги" }}</p>
+            <a href="{% url 'core:contacts' %}" class="btn">Заказать</a>
+        </div>
+        {% empty %}
+        <p>Услуги временно недоступны. Пожалуйста, проверьте позже.</p>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}

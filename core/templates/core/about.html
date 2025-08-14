@@ -1,8 +1,16 @@
 {% extends "core/base.html" %}
+{% load static %}
 
 {% block content %}
-<h1>О фотографе</h1>
-<div class="about-content">
-    {{ site_settings.about_text|linebreaks }}
+<div class="about-container">
+    <h1>О фотографе</h1>
+    <div class="about-content">
+        <img src="{% static 'core/images/photographer.jpg' %}" alt="Фотограф" class="about-photo">
+        <div class="about-text">
+            <p>Привет! Меня зовут Анна, и я профессиональный фотограф с 5-летним опытом.</p>
+            <p>Мой стиль - естественность и легкость. Я помогу вам раскрепоститься перед камерой и получить живые, эмоциональные кадры.</p>
+            <p>Работаю с: портретной съемкой, love story, семейными фотосессиями и небольшими свадьбами.</p>
+        </div>
+    </div>
 </div>
 {% endblock %}

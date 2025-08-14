@@ -22,5 +22,5 @@
 
 1. Клонируйте репозиторий:
 ```bash
-git clone 
+git clone https://github.com/Alex-Berezovsky-non/Vivid_Project
 cd framed

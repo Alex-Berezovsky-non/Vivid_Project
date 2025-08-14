@@ -3,6 +3,23 @@
 {% block content %}
 <section class="hero">
     <h1>{{ site_settings.title }}</h1>
-    <p>{{ site_settings.about_text|truncatechars:100 }}</p>
+    <p>Профессиональная фотосъемка в вашем городе. Яркие эмоции, естественные позы и индивидуальный подход к каждому клиенту.</p>
+    <a href="{% url 'core:contacts' %}" class="btn">Записаться на съемку</a>
+</section>
+
+<section class="preview-services">
+    <h2>Популярные услуги</h2>
+    <div class="services-grid">
+        <div class="service-card">
+            <h3>Индивидуальная съемка</h3>
+            <p>1,5 часа | 150 фото | 5 обработанных снимков</p>
+            <a href="{% url 'core:services' %}" class="btn">Подробнее</a>
+        </div>
+        <div class="service-card">
+            <h3>Love Story</h3>
+            <p>Романтическая съемка для пар</p>
+            <a href="{% url 'core:services' %}" class="btn">Подробнее</a>
+        </div>
+    </div>
 </section>
 {% endblock %}
