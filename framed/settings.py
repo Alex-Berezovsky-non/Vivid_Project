@@ -2,44 +2,51 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+# Загрузка переменных окружения из файла .env
 load_dotenv()
 
-SECRET_KEY = os.getenv("SECRET_KEY")
+# Определение базовой директории проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEBUG = True
-ALLOWED_HOSTS = []
+# Настройки для разработки (не для production)
+SECRET_KEY = os.getenv("SECRET_KEY")  # Секретный ключ из переменных окружения
+DEBUG = True  # Режим отладки
+ALLOWED_HOSTS = []  # Разрешенные хосты
 
-
-
+# Список установленных приложений
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.admin',          # Админ-панель
+    'django.contrib.auth',           # Аутентификация
+    'django.contrib.contenttypes',   # Система типов контента
+    'django.contrib.sessions',       # Сессии
+    'django.contrib.messages',       # Сообщения
+    'django.contrib.staticfiles',    # Статические файлы
+    'core.apps.CoreConfig',          # Основное приложение
 ]
 
+# Промежуточное ПО (middleware)
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',        # Безопасность
+    'django.contrib.sessions.middleware.SessionMiddleware', # Сессии
+    'django.middleware.common.CommonMiddleware',           # Общие функции
+    'django.middleware.csrf.CsrfViewMiddleware',           # Защита от CSRF
+    'django.contrib.auth.middleware.AuthenticationMiddleware', # Аутентификация
+    'django.contrib.messages.middleware.MessageMiddleware', # Сообщения
+    'django.middleware.clickjacking.XFrameOptionsMiddleware', # Защита от clickjacking
 ]
 
+# Корневая конфигурация URL
 ROOT_URLCONF = 'framed.urls'
 
+# Настройки шаблонов
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [BASE_DIR / 'templates'],  # Директории с шаблонами
+        'APP_DIRS': True,  # Поиск шаблонов в приложениях
         'OPTIONS': {
-            'context_processors': [
+            'context_processors': [  # Контекстные процессоры
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -48,57 +55,58 @@ TEMPLATES = [
     },
 ]
 
+# WSGI приложение
 WSGI_APPLICATION = 'framed.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
+# Настройки базы данных
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',  # Движок БД
+        'NAME': BASE_DIR / 'db.sqlite3',        # Путь к файлу БД
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
+# Валидация паролей
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # Проверка схожести с атрибутами пользователя
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',  # Минимальная длина
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',  # Проверка на распространенные пароли
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # Проверка на чисто числовой пароль
     },
 ]
 
+# Интернационализация
+LANGUAGE_CODE = 'ru-ru'         # Язык по умолчанию
+TIME_ZONE = 'Europe/Moscow'     # Часовой пояс
+USE_I18N = True                 # Включение интернационализации
+USE_L10N = True                 # Включение локализации
+USE_TZ = True                   # Использование временных зон
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
+# Статические файлы (CSS, JavaScript, изображения)
+STATIC_URL = '/static/'  # URL-префикс для статических файлов
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # Дополнительные директории со статическими файлами
+]
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Директория для collectstatic
 
-LANGUAGE_CODE = 'en-us'
+# Медиа файлы (загружаемые пользователями)
+MEDIA_URL = '/media/'   # URL-префикс для медиа файлов
+MEDIA_ROOT = BASE_DIR / 'media'  # Директория для хранения медиа файлов
 
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
-STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
+# Тип поля первичного ключа по умолчанию
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Настройки email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'  # Или другой SMTP-сервер
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your@yandex.ru'  # Ваш email
+EMAIL_HOST_PASSWORD = 'your_password'  # Пароль приложения
+DEFAULT_FROM_EMAIL = 'your@yandex.ru'  # Тот же email

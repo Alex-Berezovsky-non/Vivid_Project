@@ -1,0 +1,12 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<table class="services">
+    {% for service in services %}
+    <tr>
+        <td>{{ service.name }}</td>
+        <td>{{ service.price }}₽</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
