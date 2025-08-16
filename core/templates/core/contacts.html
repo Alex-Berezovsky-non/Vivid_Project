@@ -10,7 +10,7 @@
             <!-- Левая колонка - форма -->
             <div class="contact-form">
                 <h2>Форма обратной связи</h2>
-                <form method="post" class="form">
+                <form method="post" class="form" action="{% url 'core:contacts' %}">
                     {% csrf_token %}
                     
                     <div class="form-group">

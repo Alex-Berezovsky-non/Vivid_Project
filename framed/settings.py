@@ -103,11 +103,16 @@ MEDIA_ROOT = BASE_DIR / 'media'  # Директория для хранения 
 
 # Тип поля первичного ключа по умолчанию
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# Настройки email
+# Email Settings (Yandex)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.yandex.ru'  # Или другой SMTP-сервер
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.yandex.ru')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your@yandex.ru'  # Ваш email
-EMAIL_HOST_PASSWORD = 'your_password'  # Пароль приложения
-DEFAULT_FROM_EMAIL = 'your@yandex.ru'  # Тот же email
+EMAIL_HOST_USER = os.getenv('YANDEX_EMAIL')  # alex-berez.24-17@yandex.ru
+EMAIL_HOST_PASSWORD = os.getenv('YANDEX_EMAIL_PASSWORD')  # pckirxfkqgbldcnz
+DEFAULT_FROM_EMAIL = os.getenv('YANDEX_EMAIL')
+SERVER_EMAIL = DEFAULT_FROM_EMAIL  # Для админ-уведомлений
+# Telegram
+TELEGRAM_BOT_API_KEY = os.getenv("TELEGRAM_BOT_API_KEY")
+TELEGRAM_USER_ID = os.getenv("TELEGRAM_USER_ID")
+BASE_URL = os.getenv("BASE_URL")
