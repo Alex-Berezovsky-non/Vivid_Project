@@ -1,0 +1,53 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'portfolio/css/portfolio.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mb-4">Видео портфолио</h1>
+    
+    <div class="row">
+        {% for video in videos %}
+        <div class="col-lg-6 col-md-12 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ video.title }}</h5>
+                    
+                    {% if video.get_embed_url %}
+                    <div class="ratio ratio-16x9 mb-3">
+                        <iframe src="{{ video.get_embed_url }}" 
+                                frameborder="0" 
+                                allowfullscreen></iframe>
+                    </div>
+                    {% elif video.video_file %}
+                    <video controls class="w-100 mb-3">
+                        <source src="{{ video.video_file.url }}" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                    {% endif %}
+                    
+                    {% if video.description %}
+                    <p class="card-text">{{ video.description }}</p>
+                    {% endif %}
+                    
+                    {% if video.shooting_types.all %}
+                    <div class="mb-2">
+                        {% for shooting_type in video.shooting_types.all %}
+                        <span class="shooting-type-badge">{{ shooting_type.name }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p class="text-muted">Видео пока нет в портфолио.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

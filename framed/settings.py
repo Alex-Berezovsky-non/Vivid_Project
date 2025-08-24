@@ -22,6 +22,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',       # Сообщения
     'django.contrib.staticfiles',    # Статические файлы
     'core.apps.CoreConfig',          # Основное приложение
+    'django_filters',                # Фильтрация данных
+    'portfolio.apps.PortfolioConfig' # Приложение портфолио
 ]
 
 # Промежуточное ПО (middleware)

@@ -1,0 +1,62 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'portfolio/css/portfolio.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'portfolio/js/portfolio.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="container album-detail">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'portfolio:gallery' %}">Портфолио</a></li>
+            <li class="breadcrumb-item active">{{ album.title }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-12 text-center mb-4">
+            <h1>{{ album.title }}</h1>
+            {% if album.description %}
+            <p class="lead">{{ album.description }}</p>
+            {% endif %}
+            
+            {% if album.shooting_types.all %}
+            <div class="mb-3">
+                {% for shooting_type in album.shooting_types.all %}
+                <span class="shooting-type-badge">{{ shooting_type.name }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row photo-grid" id="photo-grid">
+        {% for photo in photos %}
+        <div class="col-lg-3 col-md-4 col-sm-6 photo-item">
+            <div class="photo-card">
+                <img src="{{ photo.image.url }}" 
+                     class="photo-img" 
+                     alt="{{ photo.title|default:album.title }}"
+                     loading="lazy"
+                     onclick="portfolioGallery.openFullscreen({{ photo.id }})">
+                
+                {% if photo.title %}
+                <div class="photo-title">
+                    <small>{{ photo.title }}</small>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p>В этом альбоме пока нет фотографий.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
