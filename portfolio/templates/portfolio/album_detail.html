@@ -1,0 +1,80 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'portfolio:gallery' %}">Портфолио</a></li>
+            <li class="breadcrumb-item active">{{ album.title }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-12 text-center mb-4">
+            <h1>{{ album.title }}</h1>
+            <p class="lead">{{ album.description }}</p>
+        </div>
+    </div>
+
+    <div class="row" id="photo-grid">
+        {% for photo in album.photos.all %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4 photo-item">
+            <div class="photo-card">
+                <img src="{{ photo.image.url }}" 
+                     class="img-fluid" 
+                     alt="{{ photo.title }}"
+                     loading="lazy"
+                     style="cursor: pointer;"
+                     onclick="openFullscreen({{ photo.id }})">
+                {% if photo.title %}
+                <div class="photo-title mt-2">
+                    <small>{{ photo.title }}</small>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p>В этом альбоме пока нет фотографий.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+function openFullscreen(photoId) {
+    window.open(`{% url 'portfolio:media_fullscreen' 0 %}`.replace('0', photoId), 
+                '_blank', 
+                'width=1200,height=800,scrollbars=no');
+}
+</script>
+
+<style>
+.photo-card {
+    transition: transform 0.3s ease;
+}
+.photo-card:hover {
+    transform: scale(1.02);
+}
+.photo-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+</style>
+
+<script>
+// Анимация появления фотографий
+document.addEventListener('DOMContentLoaded', function() {
+    const photoItems = document.querySelectorAll('.photo-item');
+    
+    photoItems.forEach((item, index) => {
+        setTimeout(() => {
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+});
+</script>
+{% endblock %}

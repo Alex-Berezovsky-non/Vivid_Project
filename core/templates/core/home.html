@@ -10,16 +10,39 @@
 <section class="preview-services">
     <h2>Популярные услуги</h2>
     <div class="services-grid">
+        {% for service in services %}
         <div class="service-card">
-            <h3>Индивидуальная съемка</h3>
-            <p>1,5 часа | 150 фото | 5 обработанных снимков</p>
+            <h3>{{ service.name }}</h3>
+            <p>{{ service.description }}</p>
+            <p class="price">{{ service.price }}₽</p>
             <a href="{% url 'core:services' %}" class="btn">Подробнее</a>
         </div>
+        {% empty %}
         <div class="service-card">
-            <h3>Love Story</h3>
-            <p>Романтическая съемка для пар</p>
-            <a href="{% url 'core:services' %}" class="btn">Подробнее</a>
+            <h3>Услуги временно недоступны</h3>
+            <p>Пожалуйста, проверьте позже</p>
         </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="preview-portfolio">
+    <h2>Последние работы</h2>
+    <div class="row">
+        {% for album in latest_albums %}
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ album.cover.url }}" class="card-img-top" alt="{{ album.title }}">
+                <div class="card-body">
+                    <h5>{{ album.title }}</h5>
+                    <a href="{% url 'portfolio:album_detail' album.slug %}" class="btn btn-primary">Смотреть альбом</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="text-center mt-3">
+        <a href="{% url 'portfolio:gallery' %}" class="btn btn-outline-primary">Все работы</a>
     </div>
 </section>
 {% endblock %}

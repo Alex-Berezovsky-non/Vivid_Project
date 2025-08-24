@@ -9,11 +9,17 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['settings'] = SiteSettings.load()
+        context['site_settings'] = SiteSettings.load()
+        context['services'] = Service.objects.filter(is_active=True)[:3]  # 3 последние услуги
         return context
 
 class AboutView(TemplateView):
     template_name = "core/about.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['settings'] = SiteSettings.load()
+        return context
 
 class ServicesView(ListView):
     model = Service
@@ -23,10 +29,15 @@ class ServicesView(ListView):
     def get_queryset(self):
         return Service.objects.filter(is_active=True)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['settings'] = SiteSettings.load()
+        return context
+
 class ContactView(SuccessMessageMixin, FormView):
     template_name = "core/contacts.html"
     form_class = ContactForm
-    success_url = reverse_lazy('contacts')
+    success_url = reverse_lazy('core:contacts')
     success_message = "Сообщение отправлено! Я свяжусь с вами в ближайшее время."
 
     def form_valid(self, form):
