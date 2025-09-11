@@ -74,7 +74,6 @@ class TimeSlotSelectionView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['form'] = TimeSlotSelectionForm()
         
-        # Получаем дату из GET-параметра, если есть
         selected_date = self.request.GET.get('date')
         if selected_date:
             try:
@@ -82,19 +81,31 @@ class TimeSlotSelectionView(TemplateView):
                 selected_date = datetime.strptime(selected_date, '%Y-%m-%d').date()
                 context['selected_date'] = selected_date
                 
-                # ВРЕМЕННО: только конкретные даты
-                available_slots = TimeSlot.objects.filter(
-                    date_type='specific',
-                    specific_date=selected_date,
-                    is_available=True
-                )
+                # Получаем ВСЕ доступные слоты
+                all_slots = TimeSlot.objects.filter(is_available=True)
+                available_slots = []
+                
+                for slot in all_slots:
+                    if slot.date_type == 'specific':
+                        # Для конкретных дат - проверяем совпадение даты
+                        if slot.specific_date == selected_date:
+                            available_slots.append(slot)
+                    elif slot.date_type == 'weekday':
+                        # Для будних дней - проверяем что день Пн-Пт (1-5)
+                        if selected_date.weekday() < 5:  # 0-4 = Пн-Пт
+                            available_slots.append(slot)
+                    elif slot.date_type == 'weekend':
+                        # Для выходных дней - проверяем что день Сб-Вс (5-6)
+                        if selected_date.weekday() >= 5:  # 5-6 = Сб-Вс
+                            available_slots.append(slot)
                 
                 # Фильтруем полностью занятые слоты
                 available_slots = [slot for slot in available_slots if not slot.is_fully_booked()]
+                
                 context['available_slots'] = available_slots
                 
             except ValueError:
-                messages.error(self.request, _("Неверный формат дати"))
+                messages.error(self.request, _("Неверный формат даты"))
         
         return context
 
