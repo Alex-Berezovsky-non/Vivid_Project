@@ -1,0 +1,46 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card text-center">
+                <div class="card-body py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                    </div>
+                    
+                    <h2 class="card-title text-success">Запись успешно создана!</h2>
+                    
+                    <div class="card-text mt-4">
+                        <p>Мы получили вашу заявку на фотосессию.</p>
+                        <p><strong>Код подтверждения:</strong> {{ booking.confirmation_code }}</p>
+                        
+                        <div class="alert alert-info mt-4">
+                            <h6>Детали записи:</h6>
+                            <p class="mb-1"><strong>Имя:</strong> {{ booking.client_name }}</p>
+                            <p class="mb-1"><strong>Время:</strong> {{ booking.time_slot }}</p>
+                            <p class="mb-1"><strong>Тип съемки:</strong> {{ booking.get_shooting_type_display }}</p>
+                        </div>
+                        
+                        <p class="text-muted">
+                            Мы свяжемся с вами в ближайшее время для подтверждения записи.<br>
+                            Сохраните код подтверждения для проверки статуса.
+                        </p>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'core:home' %}" class="btn btn-primary">
+                            Вернуться на главную
+                        </a>
+                        <a href="{% url 'bookings:booking_detail' booking.confirmation_code %}" class="btn btn-outline-secondary">
+                            Посмотреть запись
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

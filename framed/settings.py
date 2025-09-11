@@ -23,7 +23,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',    # Статические файлы
     'core.apps.CoreConfig',          # Основное приложение
     'django_filters',                # Фильтрация данных
-    'portfolio.apps.PortfolioConfig' # Приложение портфолио
+    'portfolio.apps.PortfolioConfig', # Приложение портфолио
+    'bookings.apps.BookingsConfig', # Приложение для записи 
 ]
 
 # Промежуточное ПО (middleware)

@@ -11,6 +11,7 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('', include('core.urls', namespace='core')),
     path('portfolio/', include('portfolio.urls', namespace='portfolio')),
+    path('bookings/', include('bookings.urls', namespace='bookings')),
     prefix_default_language=False
 )
 

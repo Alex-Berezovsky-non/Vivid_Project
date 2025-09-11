@@ -1,0 +1,59 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Информация о записи</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Данные клиента:</h6>
+                            <p><strong>Имя:</strong> {{ booking.client_name }}</p>
+                            <p><strong>Email:</strong> {{ booking.client_email }}</p>
+                            <p><strong>Телефон:</strong> {{ booking.client_phone }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Детали съемки:</h6>
+                            <p><strong>Время:</strong> {{ booking.time_slot }}</p>
+                            <p><strong>Тип съемки:</strong> {{ booking.get_shooting_type_display }}</p>
+                            <p><strong>Статус:</strong> 
+                                <span class="badge {% if booking.is_confirmed %}bg-success{% else %}bg-warning{% endif %}">
+                                    {% if booking.is_confirmed %}Подтверждено{% else %}Ожидает подтверждения{% endif %}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    {% if booking.message %}
+                        <div class="mt-4">
+                            <h6>Дополнительная информация:</h6>
+                            <p class="text-muted">{{ booking.message }}</p>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="mt-4">
+                        <p class="text-muted small">
+                            <strong>Код подтверждения:</strong> {{ booking.confirmation_code }}<br>
+                            <strong>Дата создания:</strong> {{ booking.created_at|date:"d.m.Y H:i" }}
+                        </p>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'bookings:calendar' %}" class="btn btn-primary">
+                            Записаться еще раз
+                        </a>
+                        <a href="{% url 'core:contacts' %}" class="btn btn-outline-secondary">
+                            Связаться с нами
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
