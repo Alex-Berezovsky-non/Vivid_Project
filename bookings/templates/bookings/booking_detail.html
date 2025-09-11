@@ -36,6 +36,24 @@
                         </div>
                     {% endif %}
                     
+                    <!-- Добавленный блок с уведомлением о статусе -->
+                    <div class="mt-4">
+                        <div class="alert {% if booking.is_confirmed %}alert-success{% else %}alert-info{% endif %}">
+                            <h6 class="alert-heading">
+                                {% if booking.is_confirmed %}
+                                    ✅ Ваша запись подтверждена!
+                                {% else %}
+                                    ⏳ Запись ожидает подтверждения
+                                {% endif %}
+                            </h6>
+                            {% if booking.is_confirmed %}
+                                <p class="mb-0">Ждем вас на фотосессию в указанное время!</p>
+                            {% else %}
+                                <p class="mb-0">Мы свяжемся с вами в ближайшее время для подтверждения деталей.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
                     <div class="mt-4">
                         <p class="text-muted small">
                             <strong>Код подтверждения:</strong> {{ booking.confirmation_code }}<br>
@@ -49,6 +67,11 @@
                         </a>
                         <a href="{% url 'core:contacts' %}" class="btn btn-outline-secondary">
                             Связаться с нами
+                        </a>
+                        
+                        <!-- Добавленная кнопка проверки статуса -->
+                        <a href="{% url 'bookings:booking_status' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-search me-2"></i>Проверить другую запись
                         </a>
                     </div>
                 </div>

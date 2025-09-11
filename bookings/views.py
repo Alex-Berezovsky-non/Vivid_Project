@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import CreateView, TemplateView, ListView
+from django.views.generic import CreateView, TemplateView, ListView, FormView
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.contrib import messages
@@ -12,6 +12,7 @@ import json
 from urllib.request import urlopen, Request
 from urllib.parse import urlencode
 from urllib.error import URLError, HTTPError
+from django import forms
 
 from .models import Booking, TimeSlot
 from .forms import BookingForm, TimeSlotSelectionForm
@@ -201,3 +202,51 @@ class BookingDetailView(TemplateView):
         code = kwargs.get('code')
         context['booking'] = get_object_or_404(Booking, confirmation_code=code)
         return context
+
+class BookingStatusForm(forms.Form):
+    """Форма для поиска брони по коду"""
+    confirmation_code = forms.CharField(
+        label=_("Код подтверждения"),
+        max_length=20,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': _('Введите ваш код подтверждения'),
+            'style': 'text-transform: uppercase;'
+        })
+    )
+    
+    def clean_confirmation_code(self):
+        code = self.cleaned_data['confirmation_code'].strip().upper()
+        if len(code) < 6:
+            raise forms.ValidationError(_("Код должен содержать не менее 6 символов"))
+        return code
+
+class BookingStatusView(FormView):
+    """Поиск брони по коду подтверждения"""
+    template_name = 'bookings/booking_status.html'
+    form_class = BookingStatusForm
+    
+    def form_valid(self, form):
+        code = form.cleaned_data['confirmation_code'].strip().upper()
+        try:
+            booking = Booking.objects.get(confirmation_code=code)
+            return redirect('bookings:booking_detail', code=booking.confirmation_code)
+        except Booking.DoesNotExist:
+            # Сохраняем введенный код в сессии для повторного отображения
+            self.request.session['last_entered_code'] = code
+            messages.error(
+                self.request, 
+                f"Запись с кодом '{code}' не найдена. Пожалуйста, проверьте правильность кода."
+            )
+            return self.form_invalid(form)
+    
+    def get_form(self, form_class=None):
+        """Восстанавливаем введенный код при ошибке"""
+        form = super().get_form(form_class)
+        last_code = self.request.session.get('last_entered_code', '')
+        if last_code:
+            form.fields['confirmation_code'].initial = last_code
+            # Очищаем сессию после использования
+            if 'last_entered_code' in self.request.session:
+                del self.request.session['last_entered_code']
+        return form

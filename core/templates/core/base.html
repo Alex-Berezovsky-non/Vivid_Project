@@ -29,13 +29,22 @@
                         <a class="nav-link" href="{% url 'core:home' %}">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'core:about' %}">О нас</a>
+                        <a class="nav-link" href="{% url 'portfolio:gallery' %}">Портфолио</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'core:services' %}">Услуги</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'core:about' %}">О нас</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'core:contacts' %}">Контакты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'bookings:calendar' %}">Записаться</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'bookings:booking_status' %}">Статус записи</a>
                     </li>
                 </ul>
             </div>
