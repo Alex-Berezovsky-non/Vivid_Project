@@ -1,0 +1,65 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Модерация отзывов</h1>
+            
+            {% if reviews %}
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    На модерации: {{ reviews.count }} отзывов
+                </div>
+                
+                <div class="row">
+                    {% for review in reviews %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-header bg-warning">
+                                <h5 class="mb-0">На модерации</h5>
+                            </div>
+                            <div class="card-body">
+                                <h6>{{ review.author }} ({{ review.email }})</h6>
+                                <div class="mb-2">
+                                    <strong>Оценка:</strong> 
+                                    <span class="text-warning">{% for i in "12345" %}{% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}{% endfor %}</span>
+                                </div>
+                                <p class="card-text">{{ review.text|truncatewords:30 }}</p>
+                                
+                                {% if review.photo %}
+                                <div class="mb-2">
+                                    <img src="{{ review.photo.url }}" alt="Фото отзыва" class="img-thumbnail" style="max-height: 150px;">
+                                </div>
+                                {% endif %}
+                                
+                                <small class="text-muted">Создан: {{ review.created_at|date:"d.m.Y H:i" }}</small>
+                                
+                                <form method="post" class="mt-3">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="review_id" value="{{ review.id }}">
+                                    <div class="btn-group w-100">
+                                        <button type="submit" name="action" value="approve" class="btn btn-success">
+                                            <i class="fas fa-check me-1"></i>Одобрить
+                                        </button>
+                                        <button type="submit" name="action" value="reject" class="btn btn-danger">
+                                            <i class="fas fa-times me-1"></i>Отклонить
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle me-2"></i>
+                    Все отзывы промодерированы! Очередь пуста.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

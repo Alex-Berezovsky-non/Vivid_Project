@@ -1,0 +1,18 @@
+<div class="reviews-list">
+    {% if reviews %}
+        <div class="row">
+            {% for review in reviews %}
+                {% include "reviews/includes/_review_card.html" %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <i class="fas fa-comments fa-3x text-muted mb-3"></i>
+            <h4>Пока нет отзывов</h4>
+            <p class="text-muted">Будьте первым, кто оставит отзыв о нашей работе!</p>
+            <a href="{% url 'reviews:create' %}" class="btn btn-primary mt-2">
+                Оставить отзыв
+            </a>
+        </div>
+    {% endif %}
+</div>

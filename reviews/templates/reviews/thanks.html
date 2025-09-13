@@ -1,0 +1,39 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card text-center">
+                <div class="card-body py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                    </div>
+                    
+                    <h2 class="card-title text-success">Спасибо за ваш отзыв!</h2>
+                    
+                    <div class="card-text mt-4">
+                        <p>Ваш отзыв успешно отправлен и будет опубликован после модерации.</p>
+                        <p>Обычно это занимает не более 24 часов.</p>
+                        
+                        <div class="alert alert-info mt-4">
+                            <h6>Что дальше?</h6>
+                            <p class="mb-0">Мы проверим отзыв и опубликуем его на сайте.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'reviews:list' %}" class="btn btn-primary">
+                            <i class="fas fa-star me-2"></i>Посмотреть все отзывы
+                        </a>
+                        <a href="{% url 'core:home' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-home me-2"></i>На главную
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

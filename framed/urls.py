@@ -12,6 +12,7 @@ urlpatterns += i18n_patterns(
     path('', include('core.urls', namespace='core')),
     path('portfolio/', include('portfolio.urls', namespace='portfolio')),
     path('bookings/', include('bookings.urls', namespace='bookings')),
+    path('reviews/',include('reviews.urls', namespace='reviews')),
     prefix_default_language=False
 )
 

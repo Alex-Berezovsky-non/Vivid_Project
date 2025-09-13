@@ -24,7 +24,8 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',          # Основное приложение
     'django_filters',                # Фильтрация данных
     'portfolio.apps.PortfolioConfig', # Приложение портфолио
-    'bookings.apps.BookingsConfig', # Приложение для записи 
+    'bookings.apps.BookingsConfig', # Приложение для записи
+    'reviews.apps.ReviewsConfig',    # Приложение отзывов
 ]
 
 # Промежуточное ПО (middleware)
@@ -54,6 +55,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'core.context_processors.site_settings',
+                'reviews.context_processors.latest_reviews',
             ],
         },
     },
