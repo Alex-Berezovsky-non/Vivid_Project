@@ -45,4 +45,43 @@
         <a href="{% url 'portfolio:gallery' %}" class="btn btn-outline-primary">Все работы</a>
     </div>
 </section>
+<section class="reviews-cta py-5 bg-light">
+    <div class="container text-center">
+        <h2 class="mb-3">Что говорят наши клиенты</h2>
+        <p class="lead mb-4">Присоединяйтесь к сотням довольных клиентов</p>
+        
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="{% url 'reviews:list' %}" class="btn btn-outline-primary btn-lg">
+                <i class="fas fa-star me-2"></i>Смотреть все отзывы
+            </a>
+            <a href="{% url 'reviews:create' %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-pencil-alt me-2"></i>Оставить отзыв
+            </a>
+        </div>
+        {% if latest_reviews %}
+        <div class="mt-5">
+            <h4>Последние отзывы</h4>
+            <div class="row justify-content-center">
+                {% for review in latest_reviews|slice:":3" %}
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="text-warning mb-2">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
+                                {% endfor %}
+                            </div>
+                            <p class="card-text">"{{ review.text|truncatewords:20 }}"</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">{{ review.author }}</small>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}

@@ -18,6 +18,22 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'core:about' %}">Обо мне</a>
                 </li>
+                
+                <!-- ВЫПАДАЮЩЕЕ МЕНЮ ОТЗЫВОВ -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        Отзывы
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'reviews:list' %}">
+                            <i class="fas fa-star me-2"></i>Все отзывы
+                        </a></li>
+                        <li><a class="dropdown-item" href="{% url 'reviews:create' %}">
+                            <i class="fas fa-pencil-alt me-2"></i>Оставить отзыв
+                        </a></li>
+                    </ul>
+                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'core:contacts' %}">Контакты</a>
                 </li>
