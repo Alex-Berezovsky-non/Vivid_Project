@@ -35,7 +35,7 @@
                         <a class="nav-link" href="{% url 'core:services' %}">Услуги</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'core:about' %}">О нас</a>
+                        <a class="nav-link" href="{% url 'core:about' %}">Обо мне</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'core:contacts' %}">Контакты</a>
@@ -59,11 +59,7 @@
     <footer class="bg-dark text-white py-4 mt-5">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <h5>О компании</h5>
-                    <p>{{ site_settings.footer_about }}</p>
-                </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <h5>Контакты</h5>
                     <ul class="list-unstyled">
                         <li><i class="fas fa-map-marker-alt me-2"></i> {{ site_settings.address }}</li>
@@ -71,11 +67,11 @@
                         <li><i class="fas fa-envelope me-2"></i> {{ site_settings.email }}</li>
                     </ul>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <h5>Быстрые ссылки</h5>
                     <ul class="list-unstyled">
                         <li><a href="{% url 'core:home' %}" class="text-white">Главная</a></li>
-                        <li><a href="{% url 'core:about' %}" class="text-white">О нас</a></li>
+                        <li><a href="{% url 'core:about' %}" class="text-white">Обо мне</a></li>
                         <li><a href="{% url 'core:services' %}" class="text-white">Услуги</a></li>
                         <li><a href="{% url 'core:contacts' %}" class="text-white">Контакты</a></li>
                     </ul>

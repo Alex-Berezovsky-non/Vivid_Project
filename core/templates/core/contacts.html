@@ -49,19 +49,41 @@
                     </div>
                 </div>
                 
-                <!-- Карта -->
-                <div class="map-container">
-                    {% if site_settings.map_embed_url %}
-                    <iframe src="{{ site_settings.map_embed_url }}" 
-                            width="100%" 
-                            height="300" 
-                            frameborder="0" 
-                            allowfullscreen></iframe>
-                    {% else %}
-                    <div class="map-placeholder">
-                        <p>Карта будет отображена здесь</p>
+                <!-- Социальные сети -->
+                <div class="social-links mt-4">
+                    <h3>Я в соцсетях:</h3>
+                    <div class="social-icons">
+                        {% if site_settings.instagram %}
+                        <a href="{{ site_settings.instagram }}" target="_blank" class="social-link">
+                            <i class="fab fa-instagram fa-2x"></i>
+                        </a>
+                        {% endif %}
+                        
+                        {% if site_settings.telegram %}
+                        <a href="{{ site_settings.telegram }}" target="_blank" class="social-link">
+                            <i class="fab fa-telegram fa-2x"></i>
+                        </a>
+                        {% endif %}
+                        
+                        {% if site_settings.whatsapp %}
+                        <a href="{{ site_settings.whatsapp }}" target="_blank" class="social-link">
+                            <i class="fab fa-whatsapp fa-2x"></i>
+                        </a>
+                        {% endif %}
+                        
+                        {% if site_settings.vk %}
+                        <a href="{{ site_settings.vk }}" target="_blank" class="social-link">
+                            <i class="fab fa-vk fa-2x"></i>
+                        </a>
+                        {% endif %}
                     </div>
-                    {% endif %}
+                </div>
+                
+                <!-- Карта -->
+                <div class="map-container mt-4">
+                    <div class="map-placeholder">
+                        <p><i class="fas fa-map-marker-alt"></i> Карта будет отображена здесь</p>
+                    </div>
                 </div>
             </div>
         </div>
