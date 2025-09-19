@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from .models import SiteSettings, Service
 from .forms import ContactForm
-from portfolio.models import Photo  # Импортируем модель фото
+from portfolio.models import Photo, Album  
 
 class HomeView(TemplateView):
     template_name = "core/home.html"
@@ -13,10 +13,15 @@ class HomeView(TemplateView):
         context['site_settings'] = SiteSettings.load()
         context['services'] = Service.objects.filter(is_active=True)[:3]  # 3 последние услуги
         
-        # ДОБАВЛЯЕМ СЛУЧАЙНЫЕ ФОТО ДЛЯ ГАЛЕРЕИ (8 штук)
+        # Случайные фото для галереи (8 штук)
         context['gallery_photos'] = Photo.objects.filter(
             album__is_published=True
         ).order_by('?')[:8]  # order_by('?') - случайный порядок
+        
+        # 3 последних опубликованных альбома
+        context['latest_albums'] = Album.objects.filter(
+            is_published=True
+        ).order_by('-created_at')[:3]
         
         return context
 
