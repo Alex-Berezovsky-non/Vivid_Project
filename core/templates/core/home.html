@@ -1,12 +1,59 @@
 {% extends "core/base.html" %}
+{% load static %}
 
 {% block content %}
+<!-- Hero секция с фото фотографа -->
 <section class="hero">
-    <h1>{{ site_settings.title }}</h1>
-    <p>Профессиональная фотосъемка в вашем городе. Яркие эмоции, естественные позы и индивидуальный подход к каждому клиенту.</p>
-    <a href="{% url 'bookings:calendar' %}" class="btn">Записаться на съемку</a>
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Текст -->
+            <div class="col-lg-6">
+                <h1>{{ site_settings.title }}</h1>
+                <p>Профессиональная фотосъемка в вашем городе. Ягкие эмоции, естественные позы и индивидуальный подход к каждому клиенту.</p>
+                <a href="{% url 'bookings:calendar' %}" class="btn btn-custom">Записаться на съемку</a>
+            </div>
+            
+            <!-- Фото фотографа -->
+            <div class="col-lg-6 text-center">
+                {% if site_settings.photographer_photo %}
+                    <img src="{{ site_settings.photographer_photo.url }}" 
+                         alt="{{ site_settings.title }}" 
+                         class="hero-photo">
+                {% else %}
+                    <img src="{% static 'core/images/default-photographer.jpg' %}" 
+                         alt="Фотограф" 
+                         class="hero-photo">
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </section>
 
+<!-- ГАЛЕРЕЯ -->
+<section class="gallery-section">
+    <div class="container">
+        <h2 class="gallery-title">Мои работы</h2>
+        <div class="gallery-container">
+            <button class="gallery-nav gallery-prev">❮</button>
+            <button class="gallery-nav gallery-next">❯</button>
+            
+            <div class="gallery-slider">
+                {% for photo in gallery_photos %}
+                <div class="gallery-item">
+                    <img src="{{ photo.image.url }}" 
+                         alt="{{ photo.title|default:'Фотография' }}" 
+                         class="gallery-img"
+                         loading="lazy">
+                </div>
+                {% empty %}
+                <p class="text-center">Фотографии скоро будут добавлены</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- УСЛУГИ -->
 <section class="preview-services">
     <h2>Популярные услуги</h2>
     <div class="services-grid">
@@ -15,7 +62,7 @@
             <h3>{{ service.name }}</h3>
             <p>{{ service.description }}</p>
             <p class="price">{{ service.price }}₽</p>
-            <a href="{% url 'core:services' %}" class="btn">Подробнее</a>
+            <a href="{% url 'core:services' %}" class="btn btn-custom">Подробнее</a>
         </div>
         {% empty %}
         <div class="service-card">
@@ -45,6 +92,7 @@
         <a href="{% url 'portfolio:gallery' %}" class="btn btn-outline-primary">Все работы</a>
     </div>
 </section>
+
 <section class="reviews-cta py-5 bg-light">
     <div class="container text-center">
         <h2 class="mb-3">Что говорят наши клиенты</h2>
