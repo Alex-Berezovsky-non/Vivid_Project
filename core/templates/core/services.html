@@ -1,20 +1,55 @@
 {% extends "core/base.html" %}
+{% load static %}
 
 {% block content %}
-<section class="services">
-    <h1>Мои услуги</h1>
-    
-    <div class="service-cards">
-        {% for service in services %}
-        <div class="service-card">
-            <h2>{{ service.name }}</h2>
-            <p class="price">{{ service.price }}₽</p>
-            <p>{{ service.description|default:"Подробное описание услуги" }}</p>
-            <a href="{% url 'core:contacts' %}" class="btn">Заказать</a>
+<section class="services py-5">
+    <div class="container">
+        <!-- Заголовок по центру -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="mb-4">Мои услуги</h1>
+                <p class="lead text-muted mb-5">Профессиональная фотосъемка для ваших особенных моментов</p>
+            </div>
         </div>
-        {% empty %}
-        <p>Услуги временно недоступны. Пожалуйста, проверьте позже.</p>
-        {% endfor %}
+
+        <!-- Услуги по центру -->
+        <div class="row justify-content-center">
+            {% for service in services %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="service-card text-center h-100">
+                    <div class="service-header mb-4">
+                        <h2>{{ service.name }}</h2>
+                    </div>
+                    <div class="service-body">
+                        <p class="price">{{ service.price }}₽</p>
+                        <p>{{ service.description|default:"Подробное описание услуги" }}</p>
+                    </div>
+                    <div class="service-footer mt-auto">
+                        <a href="{% url 'core:contacts' %}" class="btn btn-custom">Заказать</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <div class="alert alert-info">
+                    <h4>Услуги временно недоступны</h4>
+                    <p>Пожалуйста, проверьте позже или свяжитесь со мной для уточнения</p>
+                    <a href="{% url 'core:contacts' %}" class="btn btn-primary mt-2">Связаться</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Призыв к действию -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-8 text-center">
+                <div class="cta-box bg-light p-5 rounded">
+                    <h3 class="mb-3">Не нашли подходящую услугу?</h3>
+                    <p class="mb-4">Свяжитесь со мной для обсуждения индивидуального предложения</p>
+                    <a href="{% url 'core:contacts' %}" class="btn btn-primary btn-lg">Обсудить проект</a>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 {% endblock %}

@@ -11,7 +11,7 @@ body {
   font-family: 'Arial', sans-serif;
   color: #333;
   line-height: 1.6;
-  padding-top: 56px; /* Для фиксированной навигации */
+  padding-top: 76px !important; /* Компенсация для фиксированного навбара */
 }
 
 /* !important для переопределения Bootstrap */
@@ -25,12 +25,22 @@ a:hover {
   color: #3a5a80 !important;
 }
 
-/* Hero секция с фото */
+/* Фиксированный навбар */
+.navbar.fixed-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Герой-секция без отступа сверху */
 .hero {
-  padding: 6rem 0;
+  margin-top: 0 !important;
+  padding: 4rem 0 6rem !important;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   text-align: center;
-  margin-top: -56px;
 }
 
 .hero-photo {
@@ -46,6 +56,11 @@ a:hover {
 .hero-photo:hover {
   transform: perspective(1000px) rotateY(0deg);
   box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+}
+
+/* Убедимся, что все секции имеют правильные отступы */
+section {
+  scroll-margin-top: 80px; /* Для якорных ссылок */
 }
 
 /* Кнопка - более специфичный селектор */
@@ -85,29 +100,94 @@ a:hover {
   flex: 1;
 }
 
-/* Страница услуг */
-.services {
-  padding: 4rem 0;
+/* Центрирование для услуг и работ */
+.preview-services,
+.preview-portfolio {
+  text-align: center;
 }
 
+/* Карточки услуг - объединенные стили */
 .service-card {
+  background: white;
   border: 1px solid #eee;
-  border-radius: 8px;
-  padding: 2rem;
+  border-radius: 15px;
+  padding: 2.5rem;
   margin-bottom: 2rem;
   transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
 
 .service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
 }
 
-.price {
-  font-size: 1.5rem;
+.service-header h2,
+.service-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.service-header h2 {
+  font-size: 1.8rem;
+}
+
+.service-body .price,
+.service-card .price {
+  font-size: 2.2rem;
   font-weight: bold;
   color: var(--primary-color);
-  margin: 1rem 0;
+  margin: 1.5rem 0;
+}
+
+.service-body p {
+  color: var(--secondary-color);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.service-footer {
+  margin-top: auto;
+}
+
+/* Карточки альбомов */
+.preview-portfolio .card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.preview-portfolio .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+.preview-portfolio .card-img-top {
+  height: 250px;
+  object-fit: cover;
+}
+
+.preview-portfolio .card-title {
+  color: var(--dark-color);
+  font-weight: 600;
+}
+
+/* Кнопки */
+.btn-outline-primary {
+  border-width: 2px;
+  font-weight: 500;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
 /* Контакты */
@@ -220,8 +300,32 @@ a:hover {
   transform: translateY(-2px);
 }
 
+/* Стили для страницы услуг */
+.services {
+  background: #f8f9fa;
+  min-height: 70vh;
+}
+
+.cta-box {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 1px solid #e9ecef;
+  padding: 3rem;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.cta-box h3 {
+  color: var(--dark-color);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
 /* Адаптивность */
 @media (max-width: 992px) {
+  .navbar.fixed-top {
+    position: fixed;
+  }
+  
   .about-content {
     flex-direction: column;
   }
@@ -233,7 +337,7 @@ a:hover {
   
   .hero {
     text-align: center;
-    padding: 4rem 0;
+    padding: 2rem 0 4rem !important;
   }
   
   .hero-photo {
@@ -245,14 +349,34 @@ a:hover {
   .hero-photo:hover {
     transform: scale(1.05);
   }
-}
-
-@media (max-width: 768px) {
+  
   .social-icons {
     justify-content: center;
   }
   
   .footer .social-icons {
     justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 66px !important;
+  }
+  
+  .service-card {
+    padding: 2rem 1.5rem;
+  }
+  
+  .service-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .service-body .price {
+    font-size: 1.8rem;
+  }
+  
+  .cta-box {
+    padding: 2rem !important;
   }
 }

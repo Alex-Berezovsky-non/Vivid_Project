@@ -9,7 +9,7 @@
             <!-- Текст -->
             <div class="col-lg-6">
                 <h1>{{ site_settings.title }}</h1>
-                <p>Профессиональная фотосъемка в вашем городе. Ягкие эмоции, естественные позы и индивидуальный подход к каждому клиенту.</p>
+                <p>Профессиональная фотосъемка в вашем городе. Яркие эмоции, естественные позы и индивидуальный подход к каждому клиенту.</p>
                 <a href="{% url 'bookings:calendar' %}" class="btn btn-custom">Записаться на съемку</a>
             </div>
             
@@ -29,7 +29,7 @@
     </div>
 </section>
 
-<!-- ГАЛЕРЕЯ -->
+<!-- Галерея -->
 <section class="gallery-section">
     <div class="container">
         <h2 class="gallery-title">Мои работы</h2>
@@ -53,47 +53,63 @@
     </div>
 </section>
 
-<!-- УСЛУГИ -->
-<section class="preview-services">
-    <h2>Популярные услуги</h2>
-    <div class="services-grid">
-        {% for service in services %}
-        <div class="service-card">
-            <h3>{{ service.name }}</h3>
-            <p>{{ service.description }}</p>
-            <p class="price">{{ service.price }}₽</p>
-            <a href="{% url 'core:services' %}" class="btn btn-custom">Подробнее</a>
-        </div>
-        {% empty %}
-        <div class="service-card">
-            <h3>Услуги временно недоступны</h3>
-            <p>Пожалуйста, проверьте позже</p>
-        </div>
-        {% endfor %}
-    </div>
-</section>
-
-<section class="preview-portfolio">
-    <h2>Последние работы</h2>
-    <div class="row">
-        {% for album in latest_albums %}
-        <div class="col-md-4">
-            <div class="card">
-                <img src="{{ album.cover.url }}" class="card-img-top" alt="{{ album.title }}">
-                <div class="card-body">
-                    <h5>{{ album.title }}</h5>
-                    <a href="{% url 'portfolio:album_detail' album.slug %}" class="btn btn-primary">Смотреть альбом</a>
+<!-- Популярные услуги -->
+<section class="preview-services py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Популярные услуги</h2>
+        <div class="row justify-content-center">
+            {% for service in services %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="service-card text-center">
+                    <h3>{{ service.name }}</h3>
+                    <p>{{ service.description }}</p>
+                    <p class="price">{{ service.price }}₽</p>
+                    <a href="{% url 'core:services' %}" class="btn btn-custom">Подробнее</a>
                 </div>
             </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <div class="service-card">
+                    <h3>Услуги временно недоступны</h3>
+                    <p>Пожалуйста, проверьте позже</p>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-    <div class="text-center mt-3">
-        <a href="{% url 'portfolio:gallery' %}" class="btn btn-outline-primary">Все работы</a>
     </div>
 </section>
 
-<section class="reviews-cta py-5 bg-light">
+<!-- Последние работы -->
+<section class="preview-portfolio py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Последние работы</h2>
+        <div class="row justify-content-center">
+            {% for album in latest_albums %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 text-center">
+                    <img src="{{ album.cover.url }}" class="card-img-top" alt="{{ album.title }}">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ album.title }}</h5>
+                        <div class="mt-auto">
+                            <a href="{% url 'portfolio:album_detail' album.slug %}" class="btn btn-primary mt-3">Смотреть альбом</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>Альбомы скоро будут добавлены</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'portfolio:gallery' %}" class="btn btn-outline-primary btn-lg">Все работы</a>
+        </div>
+    </div>
+</section>
+
+<!-- Отзывы -->
+<section class="reviews-cta py-5">
     <div class="container text-center">
         <h2 class="mb-3">Что говорят наши клиенты</h2>
         <p class="lead mb-4">Присоединяйтесь к сотням довольных клиентов</p>
