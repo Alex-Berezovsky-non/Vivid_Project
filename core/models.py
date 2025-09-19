@@ -10,7 +10,30 @@ class SiteSettings(models.Model):
     telegram = models.URLField(_("Telegram"), blank=True)
     whatsapp = models.URLField(_("WhatsApp"), blank=True)
     vk = models.URLField(_("VKontakte"), blank=True)
-    about_text = models.TextField(_("О фотографе"))
+    about_text = models.TextField(_("Текст о фотографе"))
+    photographer_photo = models.ImageField(
+        _("Фото фотографа"),
+        upload_to='about/',
+        blank=True,
+        null=True,
+        help_text=_("Фото для страницы 'Обо мне'")
+    )
+    footer_about = models.TextField(
+        _("Текст в футере"), 
+        blank=True,
+        help_text=_("Краткое описание для футера (необязательно)")
+    )
+    address = models.CharField(
+        _("Адрес"), 
+        max_length=200, 
+        blank=True,
+        help_text=_("Адрес студии или место съемок")
+    )
+    copyright_text = models.CharField(
+        _("Текст копирайта"), 
+        max_length=200, 
+        default="Фотограф. Все права защищены."
+    )
 
     class Meta:
         verbose_name = _("Настройки")
@@ -26,7 +49,8 @@ class SiteSettings(models.Model):
                 'title': _("Фотограф"),
                 'phone': '',
                 'email': '',
-                'about_text': ''
+                'about_text': '',
+                'copyright_text': 'Фотограф. Все права защищены.'
             }
         )
         return obj

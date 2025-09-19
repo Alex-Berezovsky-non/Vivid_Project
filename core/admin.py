@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
+from django.utils.safestring import mark_safe
 from core.models import SiteSettings, Service
 from core.forms import ServiceForm
 
@@ -19,16 +20,33 @@ class SiteSettingsAdmin(admin.ModelAdmin):
     # Поля для отображения в списке
     list_display = ('title', 'phone', 'email')
     
-    # Группировка полей в админке
+    # Группировка полей в админке с понятными названиями
     fieldsets = (
-        (_('Основные настройки'), {
-            'fields': ('title', 'phone', 'email', 'about_text')
+        (_('👤 Основная информация'), {
+            'fields': ('title', 'phone', 'email', 'address')
         }),
-        (_('Социальные сети'), {
+        (_('📝 Тексты'), {
+            'fields': ('about_text', 'footer_about', 'copyright_text'),
+            'classes': ('wide',),
+        }),
+        (_('🖼️ Фото фотографа'), {
+            'fields': ('photographer_photo', 'photo_preview'),
+            'classes': ('wide',),
+        }),
+        (_('📱 Социальные сети'), {
             'fields': ('instagram', 'telegram', 'whatsapp', 'vk'),
             'classes': ('wide', 'extrapretty'),
+            'description': _('Ссылки на социальные сети фотографа')
         }),
     )
+    
+    readonly_fields = ('photo_preview',)
+    
+    def photo_preview(self, obj):
+        if obj.photographer_photo:
+            return mark_safe(f'<img src="{obj.photographer_photo.url}" style="max-height: 300px; max-width: 300px; border-radius: 8px; margin-top: 10px;">')
+        return _("Фото не загружено")
+    photo_preview.short_description = _("Предпросмотр фото")
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
