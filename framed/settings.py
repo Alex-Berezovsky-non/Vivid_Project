@@ -15,6 +15,7 @@ ALLOWED_HOSTS = []  # Разрешенные хосты
 
 # Список установленных приложений
 INSTALLED_APPS = [
+    'jazzmin',                       # Кастомная админ-панель
     'django.contrib.admin',          # Админ-панель
     'django.contrib.auth',           # Аутентификация
     'django.contrib.contenttypes',   # Система типов контента
@@ -121,3 +122,21 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL  # Для админ-уведомлений
 TELEGRAM_BOT_API_KEY = os.getenv("TELEGRAM_BOT_API_KEY")
 TELEGRAM_USER_ID = os.getenv("TELEGRAM_USER_ID")
 BASE_URL = os.getenv("BASE_URL")
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Ваш Проект",
+    "site_header": "Панель управления",
+    "site_brand": "Администрация",
+    "welcome_sign": "Добро пожаловать в панель управления",
+    "copyright": "Ваш сайт",
+    
+    # Русская локализация
+    "language_chooser": False,
+    
+    # Иконки для приложений
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
+}
